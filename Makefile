@@ -24,3 +24,6 @@ kernel.o: baselinekernel.c
 
 clean:
 	rm -rf $(OBJS_COMMON) driver_check.o driver_calib.o driver.o check calibrate measure
+
+
+#exécutant "make OPT=OPT1" (pour la version OPT1 du noyau,  etc. pour OPT2). Sans définir une variable d’environnement OPT, ça ne compilait pas.
