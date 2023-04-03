@@ -12,8 +12,8 @@ const float z [ n ][ n ]) {
 
 unsigned i , j ;
 for ( j =0; j < n ; j ++)
-for ( i =0; i < n ; i ++)
-x [ i ] += y [ j ] * z [ i ][ j ];
+  for ( i =0; i < n ; i ++)
+    x [ i ] += y [ j ] * z [ i ][ j ];
 }
 
 static int cmp_uint64 (const void *y, const void *z) {
@@ -27,7 +27,6 @@ static int cmp_uint64 (const void *y, const void *z) {
 int main(int argc, char *argv[]) {
   // Vérifier si les arguments sont corrects
   if (argc != 4) {
-   // printf("Usage: %s [taille_problème] [nom_fichier_sortie]\n", argv[0]);
    printf("Usage: %s [taille_problème] [nb_warmup] [nb_repetitions] \n", argv[0]);
     exit(1);
   }
@@ -64,7 +63,6 @@ int main(int argc, char *argv[]) {
   }
 
   //4- Appeler la fonction kernel
-  //baselineKernel(taille, x, y, (const float (*)[])z);
 
   /* warmup (repw repetitions in first meta, 1 repet in next metas) */
   if (m == 0) {
@@ -82,22 +80,6 @@ int main(int argc, char *argv[]) {
 
   const uint64_t t2 = rdtsc ();
   tdiff[m] = t2 - t1;
-
-  // // Ouvrir le fichier de sortie
-  // FILE *fichier_sortie;
-  // fichier_sortie = fopen(nom_fichier_sortie, "w");
-  // if (fichier_sortie == NULL) {
-  //   printf("Erreur: impossible d'ouvrir le fichier %s\n", nom_fichier_sortie);
-  //   exit(1);
-  // }
-
-  // // 5- Ecrire les valeurs écrites par la fonction kernel dans le fichier
-  // for (int i = 0; i < taille; i++) {
-  //   fprintf(fichier_sortie, "%f\n", x[i]);
-  // }
-
-  // // Fermer le fichier de sortie
-  // fclose(fichier_sortie);
 
   //6 Désallouer les tableaux
   free(x);
