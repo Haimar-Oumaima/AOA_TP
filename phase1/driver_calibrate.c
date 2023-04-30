@@ -5,18 +5,14 @@
 
 #define NB_METAS 31
 
+
+
 extern uint64_t rdtsc();
 
 
 void baselineKernel (unsigned n , float x [ n ] ,
 const float y [ n ] ,
-const float z [ n ][ n ]) {
-
-unsigned i , j ;
-for ( j =0; j < n ; j ++)
-  for ( i =0; i < n ; i ++)
-    x [ i ] += y [ j ] * z [ i ][ j ];
-}
+const float z [ n ][ n ]);
 
 static int cmp_uint64 (const void *a, const void *b){
     const uint64_t va = *((uint64_t *) a);
@@ -99,14 +95,17 @@ if (f == NULL)
     {
         const unsigned nb_iters = taille * taille * nb_repm;
         qsort(temps_diff[j], NB_METAS, sizeof temps_diff[j][0], cmp_uint64);
-	 fprintf(f, "Repetition %d : Median %lu RDTSC-cycles (%.2f per inner-iter)\n", j+1,
-             temps_diff[j][NB_METAS/2], (float)temps_diff[j][NB_METAS/2] / nb_iters);
+	 
         printf("Minimum %lu RDTSC-cycles (%.2f per iner-iter)\n", 
               temps_diff[j][0], (float)temps_diff[j][0] / nb_iters);
         printf("Mediane %lu RDTSC-cycles (%.2f per iner-iter)\n", 
              temps_diff[j][NB_METAS/2], (float)temps_diff[j][NB_METAS/2] / nb_iters);
         printf("%lu\n", temps_diff[j][NB_METAS/2]);
+        
+        
         const float stab = (temps_diff[j][NB_METAS/2] - temps_diff[j][0]) * 100.0f / temps_diff[j][0];
+        fprintf(f, " %d 	 %lu  		%.2f %%\n", j+1,
+             temps_diff[j][NB_METAS/2], stab);
         printf("Stability : %.2f %%\n", stab);
 
     }
